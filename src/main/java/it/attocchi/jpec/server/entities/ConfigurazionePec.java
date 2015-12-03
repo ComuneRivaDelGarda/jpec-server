@@ -17,7 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Entity
-@Table(schema = "pec", name = "pec03_config")
+@Table(schema = "generale", name = "costante")
 public class ConfigurazionePec implements Serializable {
 
 	protected static final Logger logger = LoggerFactory.getLogger(ConfigurazionePec.class);
@@ -88,28 +88,31 @@ public class ConfigurazionePec implements Serializable {
 	public static String getValueString(EntityManagerFactory emf, ConfigurazionePecEnum chiave) {
 		return get(emf).get(chiave.name()).getValore();
 	}
-	
+
 	public static Integer getValueInt(EntityManagerFactory emf, ConfigurazionePecEnum chiave) {
 		return Integer.parseInt(get(emf).get(chiave.name()).getValore());
 	}
-	
+
 	public static Boolean getValueBoolean(EntityManagerFactory emf, ConfigurazionePecEnum chiave) {
 		return Boolean.parseBoolean(get(emf).get(chiave.name()).getValore());
-	}		
+	}
 
 	public static void resetCurrent() {
 		cache = null;
 	}
 
 	@Id
-	@Column(name = "pec03_nome")
+	@Column(name = "nome")
 	private String nome;
 
-	@Column(name = "pec03_valore")
+	@Column(name = "valore")
 	private String valore;
 
-	@Column(name = "pec03_descrizione")
+	@Column(name = "descrizione")
 	private String descrizione;
+
+	@Column(name = "tipocostante")
+	private String tipocostante;
 
 	public String getNome() {
 		return nome;
@@ -133,6 +136,14 @@ public class ConfigurazionePec implements Serializable {
 
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
+	}
+
+	public String getTipocostante() {
+		return tipocostante;
+	}
+
+	public void setTipocostante(String tipocostante) {
+		this.tipocostante = tipocostante;
 	}
 
 }
