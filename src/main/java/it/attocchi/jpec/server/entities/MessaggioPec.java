@@ -16,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,6 +24,7 @@ import javax.persistence.TemporalType;
 import org.apache.commons.lang3.StringUtils;
 
 @Entity
+@SequenceGenerator(name="genmessaggiopec", sequenceName="pec.pec01_messaggi_pec01_id_seq", initialValue=1, allocationSize=1)
 @Table(schema = "pec", name = "pec01_messaggi")
 public class MessaggioPec extends AbstractEntityMarksWithIdLong<MessaggioPec> {
 
@@ -37,20 +39,20 @@ public class MessaggioPec extends AbstractEntityMarksWithIdLong<MessaggioPec> {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="genmessaggiopec")
 	@Column(name = "pec01_id")
 	private long id;
 
 	@Column(name = "pec01_destinatari")
-	@Lob
+	// @Lob
 	private String destinatari;
 
 	@Column(name = "pec01_oggetto")
-	@Lob
+	// @Lob
 	private String oggetto;
 
 	@Column(name = "pec01_messaggio")
-	@Lob
+	// @Lob
 	private String messaggio;
 
 	@Column(name = "pec01_protocollo")
@@ -141,7 +143,7 @@ public class MessaggioPec extends AbstractEntityMarksWithIdLong<MessaggioPec> {
 	private String postacertFile;
 
 	@Column(name = "pec01_postacert_body")
-	@Lob
+	// @Lob
 	private String postacertBody;
 
 	@Column(name = "pec01_postacert_contenttype")
@@ -505,7 +507,7 @@ public class MessaggioPec extends AbstractEntityMarksWithIdLong<MessaggioPec> {
 	// }
 
 	public boolean isArchiviabile() {
-		return StringUtils.isNotEmpty(getOggetto()) && !getOggetto().startsWith(MessaggioPecBL.OGGETTO_POSTA_CERTIFICATA);
+		return false; // StringUtils.isNotEmpty(getOggetto()) && !getOggetto().startsWith(MessaggioPecBL.OGGETTO_POSTA_CERTIFICATA);
 	}
 
 	public boolean isArchiviato() {
