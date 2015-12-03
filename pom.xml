@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>it.attocchi</groupId>
-	<artifactId>jpec-server-riva</artifactId>
+	<artifactId>jpec-server-gdapec</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<properties>
@@ -98,6 +98,8 @@
 		</dependency>
 	</dependencies>
 	<build>
+		<!-- <finalName>${project.artifactId}-${project.version}</finalName> -->
+		<finalName>gdapec</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
@@ -111,6 +113,9 @@
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
+					<compilerArguments>
+			            <processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
+			        </compilerArguments>
 				</configuration>
 				<dependencies>
 					<dependency>
