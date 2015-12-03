@@ -1,8 +1,8 @@
 package it.attocchi.jpec.server.entities;
 
 import it.attocchi.jpa2.JpaController;
+import it.attocchi.jpa2.entities.AbstractEntityWithIdString;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 
 @Entity
 @Table(schema = "generale", name = "costante")
-public class ConfigurazionePec implements Serializable {
+public class ConfigurazionePec extends AbstractEntityWithIdString {
 
 	protected static final Logger logger = LoggerFactory.getLogger(ConfigurazionePec.class);
 
@@ -61,8 +61,8 @@ public class ConfigurazionePec implements Serializable {
 				JpaController controller = new JpaController(emf);
 				List<ConfigurazionePec> data = controller.findAll(ConfigurazionePec.class);
 
-				// se non ci sono dati inserisco quelli di default
 				if (data == null || data.size() == 0) {
+					// se non ci sono dati inserisco quelli di default
 					for (ConfigurazionePecEnum value : ConfigurazionePecEnum.values()) {
 						ConfigurazionePec newConfigurazione = new ConfigurazionePec();
 						newConfigurazione.setNome(value.name());
@@ -70,6 +70,15 @@ public class ConfigurazionePec implements Serializable {
 					}
 					// refresh dei dati
 					data = controller.findAll(ConfigurazionePec.class);
+				} else {
+					// aggiungiamo le configurazioni mancanti
+					for (ConfigurazionePecEnum value : ConfigurazionePecEnum.values()) {
+						ConfigurazionePec newConfigurazione = new ConfigurazionePec();
+						newConfigurazione.setNome(value.name());
+						if (!data.contains(newConfigurazione)) {
+							controller.insert(newConfigurazione);
+						}
+					}
 				}
 
 				cache = new HashMap<String, ConfigurazionePec>();
@@ -144,6 +153,11 @@ public class ConfigurazionePec implements Serializable {
 
 	public void setTipocostante(String tipocostante) {
 		this.tipocostante = tipocostante;
+	}
+
+	@Override
+	public String getId() {
+		return getNome();
 	}
 
 }
