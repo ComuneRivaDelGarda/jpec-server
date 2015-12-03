@@ -5,7 +5,6 @@ import it.attocchi.jpec.server.entities.ConfigurazionePec;
 import it.attocchi.jpec.server.entities.ConfigurazionePecEnum;
 import it.attocchi.jpec.server.entities.MessaggioPec;
 import it.attocchi.jpec.server.entities.MessaggioPec.Folder;
-import it.attocchi.jpec.server.entities.MessaggioPec_;
 import it.attocchi.jpec.server.entities.filters.MessaggioPecFilter;
 import it.attocchi.mail.parts.EmailBody;
 import it.attocchi.mail.utils.MailConnection;
