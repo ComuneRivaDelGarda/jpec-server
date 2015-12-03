@@ -1,4 +1,4 @@
-# jpec-server-riva
+# jpec-server-riva (gdapec)
 una web-app java per la gestione e smistamento della casella di posta elettronica certificata
 
 ## Specifiche PEC
