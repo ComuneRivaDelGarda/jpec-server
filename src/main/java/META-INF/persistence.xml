@@ -6,16 +6,15 @@
 		
 		<!-- Entities -->				
 		<class>it.attocchi.jpec.server.entities.MessaggioPec</class>
-		<class>it.attocchi.jpec.server.entities.AllegatoPec</class>
 		<class>it.attocchi.jpec.server.entities.ConfigurazionePec</class>
-		<class>it.attocchi.jpec.server.entities.ProtocolloPec</class>
-		<class>it.attocchi.jpec.server.entities.NotificaPec</class>
+		<!-- Embedded -->
+		<class>it.attocchi.jpa2.entities.EntityMarks</class>
 		
 		<validation-mode>NONE</validation-mode>
 		<properties>
  
  			<!-- <property name="hibernate.hbm2ddl.auto" value="create-drop" /> -->
- 			<property name="hibernate.hbm2ddl.auto" value="update" />
+ 			<property name="hibernate.hbm2ddl.auto" value="validate" />
  
 			<!-- <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" /> -->
 			<!-- CACHE -->
@@ -23,8 +22,8 @@
 			<!-- LOG -->
 			<property name="hibernate.show_sql" value="false" />
 			<property name="hibernate.format_sql" value="false" />
-			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
-			<!-- <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" /> -->
+			<!-- <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" /> -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
 
 			<!-- <property name="hibernate.ejb.entitymanager_factory_name" value="DEFAULT_PU" /> -->
 
