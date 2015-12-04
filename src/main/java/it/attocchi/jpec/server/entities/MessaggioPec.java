@@ -2,7 +2,6 @@ package it.attocchi.jpec.server.entities;
 
 import it.attocchi.jpa2.entities.AbstractEntityMarksWithIdLong;
 import it.attocchi.jpa2.entities.EntityMarks;
-import it.attocchi.jpec.server.bl.MessaggioPecBL;
 import it.attocchi.utils.HtmlUtils;
 
 import java.util.Date;
@@ -15,13 +14,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.apache.commons.lang3.StringUtils;
 
 @Entity
 @SequenceGenerator(name="genmessaggiopec", sequenceName="pec.pec01_messaggi_pec01_id_seq", initialValue=1, allocationSize=1)

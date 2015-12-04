@@ -2,6 +2,7 @@ package it.attocchi.jpec.server.entities;
 
 import it.attocchi.jpa2.JpaController;
 import it.attocchi.jpa2.entities.AbstractEntityWithIdString;
+import it.attocchi.jpec.server.bl.ConfigurazionePecEnum;
 
 import java.util.HashMap;
 import java.util.List;

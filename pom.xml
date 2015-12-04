@@ -115,7 +115,7 @@
 					<target>${java.version}</target>
 					<compilerArguments>
 			            <processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
-			        </compilerArguments>
+			        </compilerArguments>					
 				</configuration>
 				<dependencies>
 					<dependency>
