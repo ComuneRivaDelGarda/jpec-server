@@ -167,6 +167,9 @@ public class MessaggioPec extends AbstractEntityMarksWithIdLong<MessaggioPec> {
 	@Column(name = "pec01_x_tipo_ricevuta")
 	private String xTipoRicevuta;
 
+	@Column(name = "pec01_mailbox")
+	private String mailbox;
+	
 	public long getId() {
 		return id;
 	}
@@ -398,16 +401,17 @@ public class MessaggioPec extends AbstractEntityMarksWithIdLong<MessaggioPec> {
 		return res;
 	}
 
-	public static MessaggioPec createNew(String utente, Folder folder) {
-		MessaggioPec nuovo = new MessaggioPec();
+	public static MessaggioPec createNew(String utente, Folder folder, String mailboxName) {
+		MessaggioPec messaggioPec = new MessaggioPec();
 
-		nuovo.folder = folder.name();
+		messaggioPec.folder = folder.name();
+		messaggioPec.mailbox = mailboxName;
 
-		nuovo.setProcessato(false);
+		messaggioPec.setProcessato(false);
 
-		nuovo.setLetto(false);
+		messaggioPec.setLetto(false);
 
-		return nuovo;
+		return messaggioPec;
 	}
 
 	// /**
@@ -560,6 +564,14 @@ public class MessaggioPec extends AbstractEntityMarksWithIdLong<MessaggioPec> {
 
 	public void setxTipoRicevuta(String xTipoRicevuta) {
 		this.xTipoRicevuta = xTipoRicevuta;
+	}
+
+	public String getMailbox() {
+		return mailbox;
+	}
+
+	public void setMailbox(String mailbox) {
+		this.mailbox = mailbox;
 	}
 
 }
