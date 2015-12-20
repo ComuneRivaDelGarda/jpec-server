@@ -14,9 +14,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
+@SequenceGenerator(name="genregolapec", sequenceName="pec.pec06_regole_pec06_id_seq", initialValue=1, allocationSize=1)
 @Table(schema = "", name = "pec06_regole")
 public class RegolaPec extends AbstractEntityMarksWithIdLong<RegolaPec> {
 
@@ -36,18 +38,15 @@ public class RegolaPec extends AbstractEntityMarksWithIdLong<RegolaPec> {
 	private String nome;
 
 	@Column(name = "pec06_note")
-	@Lob
 	private String note;
 
 	@Column(name = "pec06_evento")
 	private String evento;
 
 	@Column(name = "pec06_criterio")
-	@Lob
 	private String criterio;
 
 	@Column(name = "pec06_azione")
-	@Lob
 	private String azione;
 
 	@Column(name = "pec06_ordine")
