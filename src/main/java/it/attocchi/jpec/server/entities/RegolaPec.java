@@ -19,7 +19,7 @@ import javax.persistence.Table;
 
 @Entity
 @SequenceGenerator(name="genregolapec", sequenceName="pec.pec06_regole_pec06_id_seq", initialValue=1, allocationSize=1)
-@Table(schema = "", name = "pec06_regole")
+@Table(schema = "pec", name = "pec06_regole")
 public class RegolaPec extends AbstractEntityMarksWithIdLong<RegolaPec> {
 
 	protected static final Logger logger = Logger.getLogger(RegolaPec.class.getName());
@@ -30,7 +30,7 @@ public class RegolaPec extends AbstractEntityMarksWithIdLong<RegolaPec> {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="genregolapec")
 	@Column(name = "pec06_id")
 	private long id;
 
