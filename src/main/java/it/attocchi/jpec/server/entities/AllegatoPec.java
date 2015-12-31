@@ -12,12 +12,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.apache.commons.io.FilenameUtils;
 
 @Entity
-@Table(name = "pec02_allegati")
+@SequenceGenerator(name="genallegatopec", sequenceName="pec.pec02_allegati_pec02_id_seq", initialValue=1, allocationSize=1)
+@Table(schema = "pec", name = "pec02_allegati")
 public class AllegatoPec extends AbstractEntityMarksWithIdLong<AllegatoPec> {
 
 	/**
@@ -26,7 +28,7 @@ public class AllegatoPec extends AbstractEntityMarksWithIdLong<AllegatoPec> {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="genallegatopec")
 	@Column(name = "pec02_id")
 	private long id;
 
