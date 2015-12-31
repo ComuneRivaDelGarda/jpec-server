@@ -35,7 +35,6 @@ public class AllegatoPec extends AbstractEntityMarksWithIdLong<AllegatoPec> {
 	@Column(name = "pec02_id_pec01")
 	private long idMessaggio;
 
-	@Lob
 	@Column(name = "pec02_data")
 	private byte[] data;
 
