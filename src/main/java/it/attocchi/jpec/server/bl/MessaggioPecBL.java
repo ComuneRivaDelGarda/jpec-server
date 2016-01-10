@@ -437,21 +437,28 @@ public class MessaggioPecBL {
 			}
 			/**/
 
-			String messageID;
-			if (attachments == null || attachments.size() == 0) {
-				logger.debug("invio messaggio senza allegati");
-				messageID = m.sendMail(messaggio.getDestinatari(), null, null, messaggio.getOggetto(), messaggio.getMessaggio(), customHeaders, storeEml);
-			} else {
-				logger.debug("invio messaggio con allegati");
-				messageID = m.sendMail(messaggio.getDestinatari(), null, null, messaggio.getOggetto(), messaggio.getMessaggio(), customHeaders, attachments, storeEml);
+			String messageID = "";
+			try {
+				if (attachments == null || attachments.size() == 0) {
+					logger.debug("invio messaggio senza allegati");
+					messageID = m.sendMail(messaggio.getDestinatari(), null, null, messaggio.getOggetto(), messaggio.getMessaggio(), customHeaders, storeEml);
+				} else {
+					logger.debug("invio messaggio con allegati");
+					messageID = m.sendMail(messaggio.getDestinatari(), null, null, messaggio.getOggetto(), messaggio.getMessaggio(), customHeaders, attachments, storeEml);
+				}
+				logger.debug("messaggio inviato {}", messageID);
+				messaggio.setMessageID(messageID);
+				messaggio.setInviato(true);
+				messaggio.setDataInvio(new Date());
+				JpaController.callUpdate(emf, messaggio);
+				logger.debug("aggiornato stato messaggio {}", messaggio);
+			} catch (Exception ex) {
+				logger.error("errore durante invio email", ex);
+				messaggio.setErroreInvio(ex.getMessage());
+				JpaController.callUpdate(emf, messaggio);
+				logger.debug("aggiornato stato messaggio {}", messaggio);
+				throw ex;
 			}
-			logger.debug("messaggio inviato {}", messageID);
-
-			messaggio.setMessageID(messageID);
-			messaggio.setInviato(true);
-			messaggio.setDataInvio(new Date());
-			JpaController.callUpdate(emf, messaggio);
-			logger.debug("aggiornato stato messaggio {}", messaggio);
 
 			res = messageID;
 		} else {
@@ -580,16 +587,25 @@ public class MessaggioPecBL {
 	}
 
 	public static AllegatoPec saveFile(EntityManagerFactory emf, UploadAllegatoRequest allegatoRequest, InputStream file) throws Exception {
-		// validateAllegato(allegatoRequest);
+		validateAllegato(allegatoRequest, file);
 
 		AllegatoPec allegato = new AllegatoPec();
 		allegato.setFileName(allegatoRequest.getFileName());
 		allegato.setContetType(allegatoRequest.getContentType());
 
-		File f = File.createTempFile(FilenameUtils.getBaseName(allegatoRequest.getFileName()) + "_", "." + FilenameUtils.getExtension(allegatoRequest.getFileName()));
+		String folder = ConfigurazioneBL.getValueStringDB(emf, ConfigurazionePecEnum.PEC_ATTACH_STORE_FOLDER);
+		File f = null;
+		if (StringUtils.isBlank(folder)) {
+			logger.warn("non e' configurata nessuna cartella per il salvataggio degli allegati, viene utilizzata la cartella predefinita.");
+			f = File.createTempFile(FilenameUtils.getBaseName(allegatoRequest.getFileName()) + "_", "." + FilenameUtils.getExtension(allegatoRequest.getFileName()));
+		} else {
+			File d = new File(folder);
+			if (!d.exists()) {
+				throw new PecException("La cartella configurata per il salvataggio degli allegati non e' accessibile");
+			}
+			f = File.createTempFile(FilenameUtils.getBaseName(allegatoRequest.getFileName()) + "_", "." + FilenameUtils.getExtension(allegatoRequest.getFileName()), d);
+		}
 
-		// byte[] decodedBytes =
-		// Base64.decodeBase64(allegatoRequest.getFileBase64());
 		FileUtils.copyInputStreamToFile(file, f);
 
 		allegato.setStoreFileName(FilenameUtils.getName(f.getName()));
@@ -602,4 +618,17 @@ public class MessaggioPecBL {
 		return allegato;
 	}
 
+	private static void validateAllegato(UploadAllegatoRequest allegatoRequest, InputStream file) throws PecException {
+
+		if (allegatoRequest == null)
+			throw new PecException("Dati del file da allegare mancanti.");
+		if (file == null)
+			throw new PecException("Contenuto per il file da allegare mancante.");
+
+		if (StringUtils.isBlank(allegatoRequest.getFileName()))
+			throw new PecException("Specificare un nome valido per il file da allegare.");
+		if (allegatoRequest.getIdMessaggio() <= 0)
+			throw new PecException("Specificare un ID Messaggio Pec valido per il file da allegare.");
+
+	}
 }
