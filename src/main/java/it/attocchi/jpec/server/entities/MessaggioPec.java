@@ -44,11 +44,11 @@ public class MessaggioPec extends AbstractEntityMarksWithIdLong<MessaggioPec> {
 	private String destinatari;
 
 	@Column(name = "pec01_destinatari_cc")
-	@Lob
+	// @Lob
 	private String destinatariCC;
 
 	@Column(name = "pec01_destinatari_ccn")
-	@Lob
+	// @Lob
 	private String destinatariCCN;
 
 	@Column(name = "pec01_oggetto")
