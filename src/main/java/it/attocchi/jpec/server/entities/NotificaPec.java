@@ -15,18 +15,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(schema = "", name = "pec05_notifiche")
+@SequenceGenerator(name="gennotificapec", sequenceName="pec.pec05_notifiche_pec05_id_seq", initialValue=1, allocationSize=1)
+@Table(schema = "pec", name = "pec05_notifiche")
 public class NotificaPec extends AbstractEntityMarksWithIdLong<NotificaPec> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="gennotificapec")
 	@Column(name = "pec05_id")
 	private long id;
 
@@ -37,19 +39,15 @@ public class NotificaPec extends AbstractEntityMarksWithIdLong<NotificaPec> impl
 	private long idMessaggioPadre;
 
 	@Column(name = "pec05_destinatari")
-	@Lob
 	private String destinatari;
 
 	@Column(name = "pec05_oggetto")
-	@Lob
 	private String oggetto;
 
 	@Column(name = "pec05_messaggio")
-	@Lob
 	private String messaggio;
 
 	@Column(name = "pec05_allegati")
-	@Lob
 	private String allegati;
 
 	@Column(name = "pec05_stato_inviato")
@@ -63,7 +61,6 @@ public class NotificaPec extends AbstractEntityMarksWithIdLong<NotificaPec> impl
 	private String protocollo;
 
 	@Column(name = "pec05_errore")
-	@Lob
 	private String errore;
 
 	public long getId() {
