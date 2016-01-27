@@ -1,13 +1,25 @@
 package it.attocchi.jpec.server.bl;
 
 import it.attocchi.jpa2.JpaController;
+import it.attocchi.jpec.server.entities.MessaggioPec;
 import it.attocchi.jpec.server.entities.NotificaPec;
 import it.attocchi.jpec.server.entities.filters.NotificaPecFilter;
+import it.attocchi.mail.utils.MailSender;
+import it.attocchi.mail.utils.items.MailHeader;
+import it.attocchi.test.jpa2.entities.Utente;
+import it.attocchi.utils.DateUtilsLT;
+import it.attocchi.utils.ListUtils;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.SendFailedException;
 import javax.persistence.EntityManagerFactory;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.mail.EmailAttachment;
 import org.apache.log4j.Logger;
 
 public class NotificaPecBL {
