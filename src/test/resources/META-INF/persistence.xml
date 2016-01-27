@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-	<persistence-unit name="jpec-server-pu" transaction-type="RESOURCE_LOCAL">
+	<persistence-unit name="jpec-server-pu_TEST" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-		<non-jta-data-source>java:/comp/env/jdbc/JPecDB</non-jta-data-source>
+		<!-- <non-jta-data-source>java:/comp/env/jdbc/JPecDB</non-jta-data-source> -->
 		
 		<!-- Entities -->				
 		<class>it.attocchi.jpec.server.entities.AllegatoPec</class>
@@ -25,11 +25,15 @@
 			<!-- LOG -->
 			<property name="hibernate.show_sql" value="false" />
 			<property name="hibernate.format_sql" value="false" />
-			<!-- <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" /> -->
-			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+			<!-- <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" /> -->
 
 			<!-- <property name="hibernate.ejb.entitymanager_factory_name" value="DEFAULT_PU" /> -->
 
+	       <property name="javax.persistence.jdbc.url" value="jdbc:mysql:///jpec?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;characterSetResults=utf8&amp;connectionCollation=utf8_general_ci"/>
+	       <property name="javax.persistence.jdbc.user" value="root"/>
+	       <property name="javax.persistence.jdbc.password" value="root"/>
+       
 		</properties>
 	</persistence-unit>
 </persistence>
