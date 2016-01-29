@@ -12,7 +12,21 @@
 		<class>it.attocchi.jpec.server.entities.RegolaPec</class>
 		<!-- Embedded -->
 		<class>it.attocchi.jpa2.entities.EntityMarks</class>
-		
+		<!-- GDASUITE -->
+		<class>com.axiastudio.suite.anagrafiche.entities.Riferimento</class>
+		<class>com.axiastudio.suite.anagrafiche.entities.Soggetto</class>
+		<class>com.axiastudio.suite.anagrafiche.entities.AlboProfessionale</class>
+		<class>com.axiastudio.suite.anagrafiche.entities.TitoloSoggetto</class>
+		<class>com.axiastudio.suite.anagrafiche.entities.GruppoSoggetto</class>
+		<class>com.axiastudio.suite.anagrafiche.entities.Gruppo</class>
+		<class>com.axiastudio.suite.anagrafiche.entities.Indirizzo</class>
+		<class>com.axiastudio.suite.anagrafiche.entities.Provincia</class>
+		<class>com.axiastudio.suite.anagrafiche.entities.Stato</class>
+		<class>com.axiastudio.suite.anagrafiche.entities.RelazioneSoggetto</class>
+		<class>com.axiastudio.suite.anagrafiche.entities.Relazione</class>
+		<class>com.axiastudio.suite.anagrafiche.entities.TitoloStudioSoggetto</class>
+		<class>com.axiastudio.suite.anagrafiche.entities.TitoloStudio</class>
+				
 		<validation-mode>NONE</validation-mode>
 		<properties>
  
