@@ -1,5 +1,6 @@
 package it.attocchi.jpec.server.bl;
 
+import it.attocchi.jpec.server.entities.MessaggioPec;
 import it.attocchi.mail.utils.MailConnection;
 import it.attocchi.mail.utils.MailUtils;
 import it.attocchi.utils.DateUtilsLT;
@@ -8,6 +9,7 @@ import java.io.File;
 
 import javax.mail.Message;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -15,7 +17,7 @@ import org.apache.log4j.Logger;
 public class ArchivioEmlBL {
 
 	private static final String EML_NAME_PREFIX = "PEC_";
-
+	
 	protected static final Logger logger = Logger.getLogger(ArchivioEmlBL.class.getName());
 
 	/**
@@ -72,28 +74,25 @@ public class ArchivioEmlBL {
 		return File.createTempFile(prefix, ".eml", storeDir);
 	}
 
-	// public static String spostaEml(String prefisso, Messaggio messaggio,
-	// Messaggio messaggioStato) throws Exception {
-	// String res = null;
-	//
-	// String emlOrigine = messaggioStato.getEmlFile();
-	// String emlInvio = messaggio.getEmlFile();
-	//
-	// if (StringUtils.isNotBlank(emlOrigine) &&
-	// StringUtils.isNotBlank(emlInvio)) {
-	//
-	// File srcFile = new File(emlOrigine);
-	// File invioFile = new File(emlInvio);
-	// File destFile = new File(invioFile.getParent(), prefisso + "_" +
-	// srcFile.getName());
-	//
-	// FileUtils.moveFile(srcFile, destFile);
-	//
-	// res = destFile.getPath();
-	// }
-	//
-	// return res;
-	// }
+	public static String spostaEml(String prefisso, MessaggioPec messaggio, MessaggioPec messaggioStato) throws Exception {
+		String res = null;
+
+		String emlOrigine = messaggioStato.getEmlFile();
+		String emlInvio = messaggio.getEmlFile();
+
+		if (StringUtils.isNotBlank(emlOrigine) && StringUtils.isNotBlank(emlInvio)) {
+
+			File srcFile = new File(emlOrigine);
+			File invioFile = new File(emlInvio);
+			File destFile = new File(invioFile.getParent(), prefisso + "_" + srcFile.getName());
+
+			FileUtils.moveFile(srcFile, destFile);
+
+			res = destFile.getPath();
+		}
+
+		return res;
+	}
 
 	/**
 	 * Prepara un File per il savaltaggio EML della posta Inviata, ma poi

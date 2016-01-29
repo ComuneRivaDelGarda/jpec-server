@@ -2,15 +2,16 @@ package it.attocchi.jpec.server.protocollo.impl;
 
 import it.attocchi.jpec.server.protocollo.AbstractProtocollo;
 import it.attocchi.jpec.server.protocollo.ProtocolloEsito;
+import it.attocchi.jpec.server.protocollo.ProtocolloEsito.ProtocolloEsitoStato;
 
 import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ProtocolloTest extends AbstractProtocollo {
+public class ProtocolloTestErrore extends AbstractProtocollo {
 
-	protected final Logger logger = LoggerFactory.getLogger(ProtocolloTest.class);
+	protected final Logger logger = LoggerFactory.getLogger(ProtocolloTestErrore.class);
 
 	private String test = "";
 	
@@ -25,8 +26,10 @@ public class ProtocolloTest extends AbstractProtocollo {
 	@Override
 	public ProtocolloEsito esegui() {
 		logger.debug(this.getClass().getName());
-		String protocolloRisposta = String.valueOf(getTest() +  new Date().getTime());
-		ProtocolloEsito res = ProtocolloEsito.ok(protocolloRisposta);
+		
+		String messaggioErrore = String.valueOf("ERRORE" +  new Date().getTime());
+		ProtocolloEsito res = ProtocolloEsito.errore(messaggioErrore);		
+		
 		return res;
 	}
 	
