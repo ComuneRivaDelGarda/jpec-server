@@ -20,18 +20,19 @@
 		<class>com.axiastudio.suite.anagrafiche.entities.GruppoSoggetto</class>
 		<class>com.axiastudio.suite.anagrafiche.entities.Gruppo</class>
 		<class>com.axiastudio.suite.anagrafiche.entities.Indirizzo</class>
-		<class>com.axiastudio.suite.anagrafiche.entities.Provincia</class>
-		<class>com.axiastudio.suite.anagrafiche.entities.Stato</class>
-		<class>com.axiastudio.suite.anagrafiche.entities.RelazioneSoggetto</class>
 		<class>com.axiastudio.suite.anagrafiche.entities.Relazione</class>
-		<class>com.axiastudio.suite.anagrafiche.entities.TitoloStudioSoggetto</class>
 		<class>com.axiastudio.suite.anagrafiche.entities.TitoloStudio</class>
-				
+		<class>com.axiastudio.suite.anagrafiche.entities.RelazioneSoggetto</class>
+		<class>com.axiastudio.suite.anagrafiche.entities.TitoloStudioSoggetto</class>
+		<class>com.axiastudio.suite.anagrafiche.entities.Provincia</class>
+		<class>com.axiastudio.suite.anagrafiche.entities.Stato</class>		
+		
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<validation-mode>NONE</validation-mode>
 		<properties>
  
  			<!-- <property name="hibernate.hbm2ddl.auto" value="create-drop" /> -->
- 			<property name="hibernate.hbm2ddl.auto" value="validate" />
+ 			<!-- <property name="hibernate.hbm2ddl.auto" value="validate" /> -->
  
 			<!-- <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" /> -->
 			<!-- CACHE -->
