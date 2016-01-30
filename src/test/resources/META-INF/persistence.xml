@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="jpec-server-pu_TEST" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<!-- <non-jta-data-source>java:/comp/env/jdbc/JPecDB</non-jta-data-source> -->
+		
+		<!-- Entities -->				
+		<class>it.attocchi.jpec.server.entities.AllegatoPec</class>
+		<class>it.attocchi.jpec.server.entities.ConfigurazionePec</class>
+		<class>it.attocchi.jpec.server.entities.MessaggioPec</class>
+		<class>it.attocchi.jpec.server.entities.NotificaPec</class>
+		<class>it.attocchi.jpec.server.entities.RegolaPec</class>
+		<!-- GDASUITE -->
+		<class>com.axiastudio.suite.anagrafiche.entities.Riferimento</class>
+		<class>com.axiastudio.suite.anagrafiche.entities.Soggetto</class>
+		<class>com.axiastudio.suite.anagrafiche.entities.AlboProfessionale</class>
+		<class>com.axiastudio.suite.anagrafiche.entities.TitoloSoggetto</class>
+		<class>com.axiastudio.suite.anagrafiche.entities.GruppoSoggetto</class>
+		<class>com.axiastudio.suite.anagrafiche.entities.Gruppo</class>
+		<class>com.axiastudio.suite.anagrafiche.entities.Indirizzo</class>
+		<class>com.axiastudio.suite.anagrafiche.entities.Provincia</class>
+		<class>com.axiastudio.suite.anagrafiche.entities.Stato</class>
+		<class>com.axiastudio.suite.anagrafiche.entities.RelazioneSoggetto</class>
+		<class>com.axiastudio.suite.anagrafiche.entities.Relazione</class>
+		<class>com.axiastudio.suite.anagrafiche.entities.TitoloStudioSoggetto</class>
+		<class>com.axiastudio.suite.anagrafiche.entities.TitoloStudio</class>
+		<!-- Embedded -->
+		<class>it.attocchi.jpa2.entities.EntityMarks</class>
+		
+		<validation-mode>NONE</validation-mode>
+		<properties>
+ 
+ 			<!-- <property name="hibernate.hbm2ddl.auto" value="create-drop" /> -->
+ 			<!-- <property name="hibernate.hbm2ddl.auto" value="validate" /> -->
+ 
+			<!-- <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" /> -->
+			<!-- CACHE -->
+			<property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider" />
+			<!-- LOG -->
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.format_sql" value="false" />
+			<!-- <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" /> -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+
+			<!-- <property name="hibernate.ejb.entitymanager_factory_name" value="DEFAULT_PU" /> -->
+
+	       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/suite"/>
+	       <property name="javax.persistence.jdbc.user" value="postgres"/>
+	       <property name="javax.persistence.jdbc.password" value=""/>
+       
+		</properties>
+	</persistence-unit>
+</persistence>
