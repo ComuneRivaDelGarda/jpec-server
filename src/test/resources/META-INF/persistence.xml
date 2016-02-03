@@ -37,16 +37,20 @@
 			<!-- CACHE -->
 			<property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider" />
 			<!-- LOG -->
-			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="false" />
 			<!-- <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" /> -->
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
 
 			<!-- <property name="hibernate.ejb.entitymanager_factory_name" value="DEFAULT_PU" /> -->
 
-	       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/suite"/>
+	       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://192.168.64.20:5432/suite"/>
+	       <property name="javax.persistence.jdbc.user" value="suitepa"/>
+	       <property name="javax.persistence.jdbc.password" value="protoriva2014"/>
+	       
+<!-- 	       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql:///suite"/>
 	       <property name="javax.persistence.jdbc.user" value="postgres"/>
-	       <property name="javax.persistence.jdbc.password" value=""/>
+	       <property name="javax.persistence.jdbc.password" value=""/>	  -->      
        
 		</properties>
 	</persistence-unit>

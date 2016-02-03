@@ -77,9 +77,9 @@ public class MessaggioPec extends AbstractEntityMarksWithIdLong<MessaggioPec> {
 
 	@Column(name = "pec01_stato_anomalia", nullable = false)
 	private boolean anomalia;
-	
+
 	@Column(name = "pec01_errore_invio")
-	private String erroreInvio;	
+	private String erroreInvio;
 
 	@Column(name = "pec01_accettato_id")
 	private Long accettatoIdMessaggio;
@@ -604,7 +604,7 @@ public class MessaggioPec extends AbstractEntityMarksWithIdLong<MessaggioPec> {
 	public String getErroreInvio() {
 		return erroreInvio;
 	}
-	
+
 	public void setErroreInvio(String erroreInvio) {
 		this.erroreInvio = erroreInvio;
 	}
