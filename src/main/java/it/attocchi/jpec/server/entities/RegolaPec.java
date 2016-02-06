@@ -18,8 +18,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@SequenceGenerator(name="genregolapec", sequenceName="pec.pec06_regole_pec06_id_seq", initialValue=1, allocationSize=1)
-@Table(schema = "pec", name = "pec06_regole")
+@SequenceGenerator(name="genregolapec", sequenceName="pec.regole_id_seq", initialValue=1, allocationSize=1)
+@Table(schema = "pec", name = "regole")
 public class RegolaPec extends AbstractEntityMarksWithIdLong<RegolaPec> {
 
 	protected static final Logger logger = Logger.getLogger(RegolaPec.class.getName());
@@ -31,29 +31,29 @@ public class RegolaPec extends AbstractEntityMarksWithIdLong<RegolaPec> {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="genregolapec")
-	@Column(name = "pec06_id")
+	@Column(name = "id")
 	private long id;
 
-	@Column(name = "pec06_nome")
+	@Column(name = "nome")
 	private String nome;
 
-	@Column(name = "pec06_note")
+	@Column(name = "note")
 	private String note;
 
-	@Column(name = "pec06_evento")
+	@Column(name = "evento")
 	private String evento;
 
-	@Column(name = "pec06_criterio")
+	@Column(name = "criterio")
 	private String criterio;
 
-	@Column(name = "pec06_azione")
+	@Column(name = "azione")
 	private String azione;
 
-	@Column(name = "pec06_ordine")
+	@Column(name = "ordine")
 	private Integer ordine;
 
 	@Embedded
-	@AttributeOverrides({ @AttributeOverride(name = "dataCreazione", column = @Column(name = "pec06_dt_creazione")), @AttributeOverride(name = "dataModifica", column = @Column(name = "pec06_ts_modifica")), @AttributeOverride(name = "dataCancellazione", column = @Column(name = "pec06_dt_cancellazione")), @AttributeOverride(name = "utenteCreazioneId", column = @Column(name = "pec06_id_utente_creazione")), @AttributeOverride(name = "utenteModificaId", column = @Column(name = "pec06_id_utente_modifica")), @AttributeOverride(name = "utenteCancellazioneId", column = @Column(name = "pec06_id_utente_cancellazione")) })
+	@AttributeOverrides({ @AttributeOverride(name = "dataCreazione", column = @Column(name = "dt_creazione")), @AttributeOverride(name = "dataModifica", column = @Column(name = "ts_modifica")), @AttributeOverride(name = "dataCancellazione", column = @Column(name = "dt_cancellazione")), @AttributeOverride(name = "utenteCreazioneId", column = @Column(name = "id_utente_creazione")), @AttributeOverride(name = "utenteModificaId", column = @Column(name = "id_utente_modifica")), @AttributeOverride(name = "utenteCancellazioneId", column = @Column(name = "id_utente_cancellazione")) })
 	private EntityMarks entityMarks;
 	
 	@Override

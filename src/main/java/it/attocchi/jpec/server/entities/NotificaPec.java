@@ -21,46 +21,46 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@SequenceGenerator(name="gennotificapec", sequenceName="pec.pec05_notifiche_pec05_id_seq", initialValue=1, allocationSize=1)
-@Table(schema = "pec", name = "pec05_notifiche")
+@SequenceGenerator(name="gennotificapec", sequenceName="pec.notifiche_id_seq", initialValue=1, allocationSize=1)
+@Table(schema = "pec", name = "notifiche")
 public class NotificaPec extends AbstractEntityMarksWithIdLong<NotificaPec> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="gennotificapec")
-	@Column(name = "pec05_id")
+	@Column(name = "id")
 	private long id;
 
-	@Column(name = "pec05_tipo")
+	@Column(name = "tipo")
 	private String tipo;
 
-	@Column(name = "pec05_id_messaggio_padre")
+	@Column(name = "id_messaggio_padre")
 	private long idMessaggioPadre;
 
-	@Column(name = "pec05_destinatari")
+	@Column(name = "destinatari")
 	private String destinatari;
 
-	@Column(name = "pec05_oggetto")
+	@Column(name = "oggetto")
 	private String oggetto;
 
-	@Column(name = "pec05_messaggio")
+	@Column(name = "messaggio")
 	private String messaggio;
 
-	@Column(name = "pec05_allegati")
+	@Column(name = "allegati")
 	private String allegati;
 
-	@Column(name = "pec05_stato_inviato")
+	@Column(name = "stato_inviato")
 	private boolean inviato;
 
-	@Column(name = "pec05_data_invio")
+	@Column(name = "data_invio")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataInvio;
 
-	@Column(name = "pec05_protocollo")
+	@Column(name = "protocollo")
 	private String protocollo;
 
-	@Column(name = "pec05_errore")
+	@Column(name = "errore")
 	private String errore;
 
 	public long getId() {
@@ -152,7 +152,7 @@ public class NotificaPec extends AbstractEntityMarksWithIdLong<NotificaPec> impl
 	}
 
 	@Embedded
-	@AttributeOverrides({ @AttributeOverride(name = "dataCreazione", column = @Column(name = "pec05_dt_creazione")), @AttributeOverride(name = "dataModifica", column = @Column(name = "pec05_ts_modifica")), @AttributeOverride(name = "dataCancellazione", column = @Column(name = "pec05_dt_cancellazione")), @AttributeOverride(name = "utenteCreazioneId", column = @Column(name = "pec05_id_utente_creazione")), @AttributeOverride(name = "utenteModificaId", column = @Column(name = "pec05_id_utente_modifica")), @AttributeOverride(name = "utenteCancellazioneId", column = @Column(name = "pec05_id_utente_cancellazione")) })
+	@AttributeOverrides({ @AttributeOverride(name = "dataCreazione", column = @Column(name = "dt_creazione")), @AttributeOverride(name = "dataModifica", column = @Column(name = "ts_modifica")), @AttributeOverride(name = "dataCancellazione", column = @Column(name = "dt_cancellazione")), @AttributeOverride(name = "utenteCreazioneId", column = @Column(name = "id_utente_creazione")), @AttributeOverride(name = "utenteModificaId", column = @Column(name = "id_utente_modifica")), @AttributeOverride(name = "utenteCancellazioneId", column = @Column(name = "id_utente_cancellazione")) })
 	private EntityMarks entityMarks;
 
 	@Override

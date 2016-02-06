@@ -18,8 +18,8 @@ import javax.persistence.Table;
 import org.apache.commons.io.FilenameUtils;
 
 @Entity
-@SequenceGenerator(name="genallegatopec", sequenceName="pec.pec02_allegati_pec02_id_seq", initialValue=1, allocationSize=1)
-@Table(schema = "pec", name = "pec02_allegati")
+@SequenceGenerator(name="genallegatopec", sequenceName="pec.allegati_id_seq", initialValue=1, allocationSize=1)
+@Table(schema = "pec", name = "allegati")
 public class AllegatoPec extends AbstractEntityMarksWithIdLong<AllegatoPec> {
 
 	/**
@@ -29,35 +29,35 @@ public class AllegatoPec extends AbstractEntityMarksWithIdLong<AllegatoPec> {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="genallegatopec")
-	@Column(name = "pec02_id")
+	@Column(name = "id")
 	private long id;
 
-	@Column(name = "pec02_id_pec01")
+	@Column(name = "id_messaggio")
 	private long idMessaggio;
 
-	@Column(name = "pec02_data")
+	@Column(name = "data")
 	private byte[] data;
 
-	@Column(name = "pec02_file_name")
+	@Column(name = "file_name")
 	private String fileName;
 
-	@Column(name = "pec02_content_type")
+	@Column(name = "content_type")
 	private String contetType;
 
-	@Column(name = "pec02_size")
+	@Column(name = "size")
 	private long size;
 
-	@Column(name = "pec02_store_file_name")
+	@Column(name = "store_file_name")
 	private String storeFileName;
 
-	@Column(name = "pec02_store_path")
+	@Column(name = "store_path")
 	private String storePath;
 	
-	@Column(name = "pec02_store_url")
+	@Column(name = "store_url")
 	private String storeUrl;	
 
 	@Embedded
-	@AttributeOverrides({ @AttributeOverride(name = "dataCreazione", column = @Column(name = "pec02_dt_creazione")), @AttributeOverride(name = "dataModifica", column = @Column(name = "pec02_ts_modifica")), @AttributeOverride(name = "dataCancellazione", column = @Column(name = "pec02_dt_cancellazione")), @AttributeOverride(name = "utenteCreazioneId", column = @Column(name = "pec02_id_utente_creazione")), @AttributeOverride(name = "utenteModificaId", column = @Column(name = "pec02_id_utente_modifica")), @AttributeOverride(name = "utenteCancellazioneId", column = @Column(name = "pec02_id_utente_cancellazione")) })
+	@AttributeOverrides({ @AttributeOverride(name = "dataCreazione", column = @Column(name = "dt_creazione")), @AttributeOverride(name = "dataModifica", column = @Column(name = "ts_modifica")), @AttributeOverride(name = "dataCancellazione", column = @Column(name = "dt_cancellazione")), @AttributeOverride(name = "utenteCreazioneId", column = @Column(name = "id_utente_creazione")), @AttributeOverride(name = "utenteModificaId", column = @Column(name = "id_utente_modifica")), @AttributeOverride(name = "utenteCancellazioneId", column = @Column(name = "id_utente_cancellazione")) })
 	private EntityMarks entityMarks;
 
 	public long getId() {
