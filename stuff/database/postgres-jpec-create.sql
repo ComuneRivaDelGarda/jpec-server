@@ -1,64 +1,124 @@
 create schema pec;
 
-CREATE TABLE pec.pec01_messaggi (
-	pec01_id int8 NOT NULL,
-	pec01_stato_accettato bool NOT NULL,
-	pec01_accettato_id int8,
-	pec01_stato_anomalia bool NOT NULL,
-	pec01_anomalia_id int8,
-	pec01_archiviato bool,
-	pec01_archiviato_data timestamp,
-	pec01_archiviato_id_utente int8,
-	pec01_stato_consegnato bool NOT NULL,
-	pec01_consegnato_id int8,
-	pec01_data_invio timestamp,
-	pec01_data_invio_originale timestamp,
-	pec01_data_ricezione timestamp,
-	pec01_destinatari varchar,
-	pec01_mittente_email varchar(255),
-	pec01_eml_file varchar(255),
-	pec01_dt_cancellazione timestamp,
-	pec01_dt_creazione timestamp,
-	pec01_ts_modifica timestamp,
-	pec01_id_utente_cancellazione int8,
-	pec01_id_utente_creazione int8,
-	pec01_id_utente_modifica int8,
-	pec01_folder varchar(255),
-	pec01_stato_inoltrato bool,
-	pec01_inoltrato_destinatari varchar(255),
-	pec01_inoltrato_data timestamp,
-	pec01_inoltrato_id_utente int8,
-	pec01_stato_inviato bool,
-	pec01_letto bool,
-	pec01_letto_data timestamp,
-	pec01_letto_id_utente int8,
-	pec01_message_id varchar(255),
-	pec01_messaggio varchar,
-	pec01_mittente_nome varchar(255),
-	pec01_oggetto varchar,
-	pec01_postacert_body varchar,
-	pec01_postacert_contenttype varchar(255),
-	pec01_postacert_file varchar(255),
-	pec01_processato bool,
-	pec01_protocollo varchar(255),
-	pec01_mittente_username varchar(255),
-	pec01_x_ricevuta varchar(255),
-	pec01_x_riferimento_message_id varchar(255),
-	pec01_x_tipo_ricevuta varchar(255),
-	CONSTRAINT pec01_messaggi_pkey PRIMARY KEY (pec01_id)
-);
--- CREATE INDEX pec01_messaggi_pkey ON pec.pec01_messaggi (pec01_id);
-CREATE SEQUENCE pec.pec01_messaggi_pec01_id_seq START 1;
+CREATE TABLE pec.messaggi (
+	id bigserial NOT NULL,
+	stato_accettato bool NOT NULL,
+	accettato_id bigint,
+	stato_anomalia bool NOT NULL,
+	anomalia_id bigint,
+	archiviato bool,
+	archiviato_data timestamp,
+	archiviato_id_utente bigint,
+	stato_consegnato bool NOT NULL,
+	consegnato_id bigint,
+	data_invio timestamp,
+	data_invio_originale timestamp,
+	data_ricezione timestamp,
+	destinatari varchar,
+	mittente_email varchar,
+	eml_file varchar,
+	
+	dt_cancellazione timestamp,
+	dt_creazione timestamp,
+	ts_modifica timestamp,
+	id_utente_cancellazione bigint,
+	id_utente_creazione bigint,
+	id_utente_modifica bigint,
+	
+	folder varchar,
+	stato_inoltrato bool,
+	inoltrato_destinatari varchar,
+	inoltrato_data timestamp,
+	inoltrato_id_utente bigint,
+	stato_inviato bool,
+	letto bool,
+	letto_data timestamp,
+	letto_id_utente bigint,
+	message_id varchar,
+	messaggio varchar,
+	mittente_nome varchar,
+	oggetto varchar,
+	postacert_body varchar,
+	postacert_contenttype varchar,
+	postacert_file varchar,
+	processato bool,
+	protocollo varchar,
+	mittente_username varchar,
+	x_ricevuta varchar,
+	x_riferimento_message_id varchar,
+	x_tipo_ricevuta varchar,
+	mailbox varchar,
+	destinatari_cc varchar,
+	destinatari_ccn varchar,
+	errore_invio varchar,
+	url_documentale varchar,
 
-CREATE TABLE pec.pec06_regole (
-	pec06_id int8 NOT NULL,
-	pec06_azione varchar,
-	pec06_criterio varchar,
-	pec06_evento varchar(255),
-	pec06_nome varchar(255),
-	pec06_note varchar,
-	pec06_ordine int4,
-	CONSTRAINT pec06_regole_pkey PRIMARY KEY (pec06_id)
+	CONSTRAINT messaggi_pkey PRIMARY KEY (id)
 );
--- CREATE INDEX pec06_regole_pkey ON pec.pec06_regole (pec06_id);
-CREATE SEQUENCE pec.pec06_regole_pec06_id_seq START 1;
+-- CREATE SEQUENCE pec.messaggi_id_seq START 1;
+
+CREATE TABLE pec.regole (
+	id bigserial NOT NULL,
+	azione varchar,
+	criterio varchar,
+	evento varchar,
+	nome varchar,
+	note varchar,
+	ordine int,
+	
+	dt_cancellazione timestamp,
+	dt_creazione timestamp,
+	ts_modifica timestamp,
+	id_utente_cancellazione bigint,
+	id_utente_creazione bigint,
+	id_utente_modifica bigint,	
+	
+	CONSTRAINT regole_pkey PRIMARY KEY (id)
+);
+-- CREATE SEQUENCE pec.regole_id_seq START 1;
+
+CREATE TABLE pec.allegati (
+	id bigserial NOT NULL,
+	id_pec01 bigint,
+	data bytea,
+	file_name varchar,
+	content_type varchar,
+	size bigint,
+	store_file_name varchar,
+	store_path varchar,
+	store_url varchar,
+	
+	dt_cancellazione timestamp,
+	dt_creazione timestamp,
+	ts_modifica timestamp,
+	id_utente_cancellazione bigint,
+	id_utente_creazione bigint,
+	id_utente_modifica bigint,
+	
+	CONSTRAINT allegati_pkey PRIMARY KEY (id)
+);
+-- CREATE SEQUENCE pec.allegati_id_seq START 1;
+
+CREATE TABLE pec.notifiche (
+	id bigserial NOT NULL,
+	tipo varchar,
+	id_messaggio_padre bigint,
+	destinatari varchar,
+	oggetto varchar,
+	messaggio varchar,
+	allegati varchar,
+	stato_inviato bool,
+	data_invio timestamp,
+	protocollo varchar,
+	errore varchar,
+		
+	dt_cancellazione timestamp,
+	dt_creazione timestamp,
+	ts_modifica timestamp,
+	id_utente_cancellazione bigint,
+	id_utente_creazione bigint,
+	id_utente_modifica bigint,
+	
+	CONSTRAINT notifiche_pkey PRIMARY KEY (id)
+);
+-- CREATE SEQUENCE pec.notifiche_id_seq START 1;

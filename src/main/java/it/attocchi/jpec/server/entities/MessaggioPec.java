@@ -20,8 +20,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@SequenceGenerator(name="genmessaggiopec", sequenceName="pec.pec01_messaggi_pec01_id_seq", initialValue=1, allocationSize=1)
-@Table(schema = "pec", name = "pec01_messaggi")
+@SequenceGenerator(name="genmessaggiopec", sequenceName="pec.messaggi_id_seq", initialValue=1, allocationSize=1)
+@Table(schema = "pec", name = "messaggi")
 public class MessaggioPec extends AbstractEntityMarksWithIdLong<MessaggioPec> {
 
 	public enum Folder {
@@ -36,151 +36,154 @@ public class MessaggioPec extends AbstractEntityMarksWithIdLong<MessaggioPec> {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="genmessaggiopec")
-	@Column(name = "pec01_id")
+	@Column(name = "id")
 	private long id;
 
-	@Column(name = "pec01_destinatari")
+	@Column(name = "destinatari")
 	// @Lob
 	private String destinatari;
 
-	@Column(name = "pec01_destinatari_cc")
+	@Column(name = "destinatari_cc")
 	// @Lob
 	private String destinatariCC;
 
-	@Column(name = "pec01_destinatari_ccn")
+	@Column(name = "destinatari_ccn")
 	// @Lob
 	private String destinatariCCN;
 
-	@Column(name = "pec01_oggetto")
+	@Column(name = "oggetto")
 	// @Lob
 	private String oggetto;
 
-	@Column(name = "pec01_messaggio")
+	@Column(name = "messaggio")
 	// @Lob
 	private String messaggio;
 
-	@Column(name = "pec01_protocollo")
+	@Column(name = "protocollo")
 	private String protocollo;
 
-	@Column(name = "pec01_data_invio")
+	@Column(name = "data_invio")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataInvio;
 
-	@Column(name = "pec01_stato_inviato")
+	@Column(name = "stato_inviato")
 	private boolean inviato;
 
-	@Column(name = "pec01_stato_accettato", nullable = false)
+	@Column(name = "stato_accettato", nullable = false)
 	private boolean accettato;
 
-	@Column(name = "pec01_stato_consegnato", nullable = false)
+	@Column(name = "stato_consegnato", nullable = false)
 	private boolean consegnato;
 
-	@Column(name = "pec01_stato_anomalia", nullable = false)
+	@Column(name = "stato_anomalia", nullable = false)
 	private boolean anomalia;
-	
-	@Column(name = "pec01_errore_invio")
-	private String erroreInvio;	
 
-	@Column(name = "pec01_accettato_id")
+	@Column(name = "errore_invio")
+	private String erroreInvio;
+
+	@Column(name = "accettato_id")
 	private Long accettatoIdMessaggio;
 
-	@Column(name = "pec01_consegnato_id")
+	@Column(name = "consegnato_id")
 	private Long consegnatoIdMessaggio;
 
-	@Column(name = "pec01_anomalia_id")
+	@Column(name = "anomalia_id")
 	private Long anomaliaIdMessaggio;
 
-	@Column(name = "pec01_folder")
+	@Column(name = "folder")
 	private String folder;
 
-	@Column(name = "pec01_eml_file")
+	@Column(name = "eml_file")
 	private String emlFile;
 
-	// @Column(name = "pec01_id_utente", nullable = false)
+	// @Column(name = "id_utente", nullable = false)
 	// private int idUtente;
 
-	@Column(name = "pec01_mittente_email")
+	@Column(name = "mittente_email")
 	private String emailMittente;
-	@Column(name = "pec01_mittente_nome")
+	@Column(name = "mittente_nome")
 	private String nomeMittente;
-	@Column(name = "pec01_mittente_username")
+	@Column(name = "mittente_username")
 	private String usernameMittente;
 
 	/* Dati Messaggi Ricevuti */
 
-	@Column(name = "pec01_data_ricezione")
+	@Column(name = "data_ricezione")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataRicezione;
 
-	@Column(name = "pec01_data_invio_originale")
+	@Column(name = "data_invio_originale")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataInvioOriginale;
 
-	@Column(name = "pec01_processato")
+	@Column(name = "processato")
 	private boolean processato;
 
 	@Embedded
-	@AttributeOverrides({ @AttributeOverride(name = "dataCreazione", column = @Column(name = "pec01_dt_creazione")), @AttributeOverride(name = "dataModifica", column = @Column(name = "pec01_ts_modifica")), @AttributeOverride(name = "dataCancellazione", column = @Column(name = "pec01_dt_cancellazione")), @AttributeOverride(name = "utenteCreazioneId", column = @Column(name = "pec01_id_utente_creazione")), @AttributeOverride(name = "utenteModificaId", column = @Column(name = "pec01_id_utente_modifica")), @AttributeOverride(name = "utenteCancellazioneId", column = @Column(name = "pec01_id_utente_cancellazione")) })
+	@AttributeOverrides({ @AttributeOverride(name = "dataCreazione", column = @Column(name = "dt_creazione")), @AttributeOverride(name = "dataModifica", column = @Column(name = "ts_modifica")), @AttributeOverride(name = "dataCancellazione", column = @Column(name = "dt_cancellazione")), @AttributeOverride(name = "utenteCreazioneId", column = @Column(name = "id_utente_creazione")), @AttributeOverride(name = "utenteModificaId", column = @Column(name = "id_utente_modifica")), @AttributeOverride(name = "utenteCancellazioneId", column = @Column(name = "id_utente_cancellazione")) })
 	private EntityMarks entityMarks;
 
-	@Column(name = "pec01_stato_inoltrato")
+	@Column(name = "stato_inoltrato")
 	private boolean inoltrato;
 
-	@Column(name = "pec01_inoltrato_id_utente")
+	@Column(name = "inoltrato_id_utente")
 	private long inotratoIdUtente;
 
-	@Column(name = "pec01_inoltrato_destinatari")
+	@Column(name = "inoltrato_destinatari")
 	private String inoltratoDestinatari;
 
-	@Column(name = "pec01_inoltrato_data")
+	@Column(name = "inoltrato_data")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date inotratoData;
 
-	@Column(name = "pec01_letto")
+	@Column(name = "letto")
 	private boolean letto;
 
-	@Column(name = "pec01_letto_id_utente")
+	@Column(name = "letto_id_utente")
 	private long lettoIdUtente;
 
-	@Column(name = "pec01_letto_data")
+	@Column(name = "letto_data")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lettoData;
 
-	@Column(name = "pec01_postacert_file")
+	@Column(name = "postacert_file")
 	private String postacertFile;
 
-	@Column(name = "pec01_postacert_body")
+	@Column(name = "postacert_body")
 	// @Lob
 	private String postacertBody;
 
-	@Column(name = "pec01_postacert_contenttype")
+	@Column(name = "postacert_contenttype")
 	private String postacertContentType;
 
-	@Column(name = "pec01_archiviato")
+	@Column(name = "archiviato")
 	private boolean archiviato;
 
-	@Column(name = "pec01_archiviato_id_utente")
+	@Column(name = "archiviato_id_utente")
 	private long archiviatoIdUtente;
 
-	@Column(name = "pec01_archiviato_data")
+	@Column(name = "archiviato_data")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date archiviatoData;
 
-	@Column(name = "pec01_message_id")
+	@Column(name = "message_id")
 	private String messageID;
 
-	@Column(name = "pec01_x_riferimento_message_id")
+	@Column(name = "x_riferimento_message_id")
 	private String xRiferimentoMessageID;
 
-	@Column(name = "pec01_x_ricevuta")
+	@Column(name = "x_ricevuta")
 	private String xRicevuta;
 
-	@Column(name = "pec01_x_tipo_ricevuta")
+	@Column(name = "x_tipo_ricevuta")
 	private String xTipoRicevuta;
 
-	@Column(name = "pec01_mailbox")
+	@Column(name = "mailbox")
 	private String mailbox;
 
+	@Column(name = "url_documentale")
+	private String urlDocumentale;
+	
 	public long getId() {
 		return id;
 	}
@@ -604,8 +607,28 @@ public class MessaggioPec extends AbstractEntityMarksWithIdLong<MessaggioPec> {
 	public String getErroreInvio() {
 		return erroreInvio;
 	}
-	
+
 	public void setErroreInvio(String erroreInvio) {
 		this.erroreInvio = erroreInvio;
 	}
+<<<<<<< HEAD
+	
+	public String getUrlDocumentale() {
+		return urlDocumentale;
+	}
+	
+	public void setUrlDocumentale(String urlDocumentale) {
+		this.urlDocumentale = urlDocumentale;
+	}
+=======
+
+	public String getUrlDocumentale() {
+		return urlDocumentale;
+	}
+
+	public void setUrlDocumentale(String urlDocumentale) {
+		this.urlDocumentale = urlDocumentale;
+	}
+
+>>>>>>> refs/remotes/upstream/develop
 }
