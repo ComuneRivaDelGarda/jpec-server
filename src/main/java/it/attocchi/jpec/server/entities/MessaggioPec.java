@@ -20,7 +20,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@SequenceGenerator(name="genmessaggiopec", sequenceName="pec.messaggi_id_seq", initialValue=1, allocationSize=1)
+@SequenceGenerator(name = "genmessaggiopec", sequenceName = "pec.messaggi_id_seq", initialValue = 1, allocationSize = 1)
 @Table(schema = "pec", name = "messaggi")
 public class MessaggioPec extends AbstractEntityMarksWithIdLong<MessaggioPec> {
 
@@ -35,7 +35,7 @@ public class MessaggioPec extends AbstractEntityMarksWithIdLong<MessaggioPec> {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="genmessaggiopec")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "genmessaggiopec")
 	@Column(name = "id")
 	private long id;
 
@@ -183,7 +183,7 @@ public class MessaggioPec extends AbstractEntityMarksWithIdLong<MessaggioPec> {
 
 	@Column(name = "url_documentale")
 	private String urlDocumentale;
-	
+
 	public long getId() {
 		return id;
 	}
@@ -521,7 +521,8 @@ public class MessaggioPec extends AbstractEntityMarksWithIdLong<MessaggioPec> {
 	// }
 
 	public boolean isArchiviabile() {
-		return false; // StringUtils.isNotEmpty(getOggetto()) && !getOggetto().startsWith(MessaggioPecBL.OGGETTO_POSTA_CERTIFICATA);
+		return false; // StringUtils.isNotEmpty(getOggetto()) &&
+						// !getOggetto().startsWith(MessaggioPecBL.OGGETTO_POSTA_CERTIFICATA);
 	}
 
 	public boolean isArchiviato() {
@@ -611,16 +612,6 @@ public class MessaggioPec extends AbstractEntityMarksWithIdLong<MessaggioPec> {
 	public void setErroreInvio(String erroreInvio) {
 		this.erroreInvio = erroreInvio;
 	}
-<<<<<<< HEAD
-	
-	public String getUrlDocumentale() {
-		return urlDocumentale;
-	}
-	
-	public void setUrlDocumentale(String urlDocumentale) {
-		this.urlDocumentale = urlDocumentale;
-	}
-=======
 
 	public String getUrlDocumentale() {
 		return urlDocumentale;
@@ -630,5 +621,4 @@ public class MessaggioPec extends AbstractEntityMarksWithIdLong<MessaggioPec> {
 		this.urlDocumentale = urlDocumentale;
 	}
 
->>>>>>> refs/remotes/upstream/develop
 }
