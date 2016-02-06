@@ -28,7 +28,9 @@
           driverClassName="org.postgresql.Driver"
           url="jdbc:postgresql://192.168.64.20:5432/suite"/>
           
-<!-- 	<Resource name="jdbc/JPecDB"
+          <!-- url="jdbc:postgresql://192.168.64.66:5432/suite"/> -->
+          
+	<!-- <Resource name="jdbc/JPecDB"
           auth="Container"
           type="javax.sql.DataSource"
           factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"

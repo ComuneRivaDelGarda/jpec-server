@@ -611,6 +611,7 @@ public class MessaggioPec extends AbstractEntityMarksWithIdLong<MessaggioPec> {
 	public void setErroreInvio(String erroreInvio) {
 		this.erroreInvio = erroreInvio;
 	}
+<<<<<<< HEAD
 	
 	public String getUrlDocumentale() {
 		return urlDocumentale;
@@ -619,4 +620,15 @@ public class MessaggioPec extends AbstractEntityMarksWithIdLong<MessaggioPec> {
 	public void setUrlDocumentale(String urlDocumentale) {
 		this.urlDocumentale = urlDocumentale;
 	}
+=======
+
+	public String getUrlDocumentale() {
+		return urlDocumentale;
+	}
+
+	public void setUrlDocumentale(String urlDocumentale) {
+		this.urlDocumentale = urlDocumentale;
+	}
+
+>>>>>>> refs/remotes/upstream/develop
 }
