@@ -2,6 +2,7 @@ package it.attocchi.jpec.server.entities;
 
 import it.attocchi.jpa2.entities.AbstractEntityMarksWithIdLong;
 import it.attocchi.jpa2.entities.EntityMarks;
+import it.attocchi.jpec.server.bl.RegolaPecEventoEnum;
 
 import java.util.logging.Logger;
 
@@ -10,10 +11,11 @@ import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -41,7 +43,8 @@ public class RegolaPec extends AbstractEntityMarksWithIdLong<RegolaPec> {
 	private String note;
 
 	@Column(name = "evento")
-	private String evento;
+	@Enumerated(EnumType.STRING)
+	private RegolaPecEventoEnum evento;
 
 	@Column(name = "criterio")
 	private String criterio;
@@ -49,6 +52,9 @@ public class RegolaPec extends AbstractEntityMarksWithIdLong<RegolaPec> {
 	@Column(name = "azione")
 	private String azione;
 
+	@Column(name = "classe")
+	private String classe;
+	
 	@Column(name = "ordine")
 	private Integer ordine;
 
@@ -89,11 +95,11 @@ public class RegolaPec extends AbstractEntityMarksWithIdLong<RegolaPec> {
 		this.note = note;
 	}
 
-	public String getEvento() {
+	public RegolaPecEventoEnum getEvento() {
 		return evento;
 	}
 
-	public void setEvento(String evento) {
+	public void setEvento(RegolaPecEventoEnum evento) {
 		this.evento = evento;
 	}
 
@@ -121,8 +127,11 @@ public class RegolaPec extends AbstractEntityMarksWithIdLong<RegolaPec> {
 		this.ordine = ordine;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public String getClasse() {
+		return classe;
 	}
 
+	public void setClasse(String classe) {
+		this.classe = classe;
+	}
 }
