@@ -32,7 +32,7 @@ public class TestRegolaPec {
 			AzioneEsito regoleImportaConvalidate = RegolaPecBL.applicaRegole(emf, regoleImporta, AzioneContext.buildContextMessaggi(emf, null, null, ""));
 
 			Assert.assertTrue(regoleImportaConvalidate.stato == AzioneEsitoStato.OK);
-			
+
 			emf.close();
 		} catch (Exception ex) {
 			logger.error("test", ex);
