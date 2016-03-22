@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 
 public class TestRegolaPec {
 
-	protected final Logger logger = LoggerFactory.getLogger(TestRegolaPec.class);
+	protected final Logger logger = LoggerFactory.getLogger(TestGetSoggetto.class);
 
 	@Test
 	public void test() throws Exception {
