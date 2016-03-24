@@ -11,14 +11,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.apache.commons.io.FilenameUtils;
 
 @Entity
-@SequenceGenerator(name="genallegatopec", sequenceName="pec.allegati_id_seq", initialValue=1, allocationSize=1)
+@SequenceGenerator(name = "genallegatopec", sequenceName = "pec.allegati_id_seq", initialValue = 1, allocationSize = 1)
 @Table(schema = "pec", name = "allegati")
 public class AllegatoPec extends AbstractEntityMarksWithIdLong<AllegatoPec> {
 
@@ -28,7 +27,7 @@ public class AllegatoPec extends AbstractEntityMarksWithIdLong<AllegatoPec> {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="genallegatopec")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "genallegatopec")
 	@Column(name = "id")
 	private long id;
 
@@ -52,9 +51,9 @@ public class AllegatoPec extends AbstractEntityMarksWithIdLong<AllegatoPec> {
 
 	@Column(name = "store_path")
 	private String storePath;
-	
+
 	@Column(name = "store_url")
-	private String storeUrl;	
+	private String storeUrl;
 
 	@Embedded
 	@AttributeOverrides({ @AttributeOverride(name = "dataCreazione", column = @Column(name = "dt_creazione")), @AttributeOverride(name = "dataModifica", column = @Column(name = "ts_modifica")), @AttributeOverride(name = "dataCancellazione", column = @Column(name = "dt_cancellazione")), @AttributeOverride(name = "utenteCreazioneId", column = @Column(name = "id_utente_creazione")), @AttributeOverride(name = "utenteModificaId", column = @Column(name = "id_utente_modifica")), @AttributeOverride(name = "utenteCancellazioneId", column = @Column(name = "id_utente_cancellazione")) })
