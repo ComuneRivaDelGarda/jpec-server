@@ -130,7 +130,7 @@
 				com.axiastudio.gda.services.protocollazione2
 			</groupId>
 			<artifactId>gdapec-protocollo-client</artifactId>
-			<version>1.18.0-SNAPSHOT</version>
+			<version>1.19.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 	<build>
