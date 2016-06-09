@@ -187,7 +187,7 @@ public class MessaggioPec extends AbstractEntityMarksWithIdLong<MessaggioPec> {
 	private String urlDocumentale;
 
 	@Column(name = "daticert_xml")
-	private String daticertxml;
+	private String daticertXml;
 
 	public long getId() {
 		return id;
@@ -634,11 +634,11 @@ public class MessaggioPec extends AbstractEntityMarksWithIdLong<MessaggioPec> {
 		this.urlDocumentale = urlDocumentale;
 	}
 
-	public String getDaticertxml() {
-		return daticertxml;
+	public String getDaticertXml() {
+		return daticertXml;
 	}
 
-	public void setDaticertxml(String daticertxml) {
-		this.daticertxml = daticertxml;
+	public void setDaticertXml(String daticertXml) {
+		this.daticertXml = daticertXml;
 	}
 }

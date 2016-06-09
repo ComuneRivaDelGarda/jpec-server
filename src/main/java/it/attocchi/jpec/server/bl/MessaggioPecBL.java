@@ -271,12 +271,29 @@ public class MessaggioPecBL {
 
 								messaggioPec.setDestinatari(ListUtils.toCommaSeparedNoBracket(MailUtils.getAllRecipents(mail)));
 
-								/* aggiunta informazioni daticert e postacert */
+								/*
+								 * aggiunta informazioni daticert.xml e
+								 * postacert.eml
+								 */
 								PecParser2 pecParser2 = new PecParser2();
 								pecParser2.dumpPart(mail);
-
-								messaggioPec.setDaticertxml(pecParser2.getDaticertXml());
-								messaggioPec.setPostacertSubject(pecParser2.getPostacertEmlSubject());
+								String daticertXml = pecParser2.getDaticertXml();
+								if (daticertXml != null) {
+									messaggioPec.setDaticertXml(daticertXml);
+								} else {
+									logger.warn("daticert.xml non ricavato dalla pec");
+								}
+								String postacertEmlSubject = pecParser2.getPostacertEmlSubject();
+								if (postacertEmlSubject != null) {
+									messaggioPec.setPostacertSubject(postacertEmlSubject);
+								} else {
+									logger.warn("oggetto vuoto da postacert.eml");
+									// messaggioPec.setPostacertSubject(messaggioPec.getOggetto());
+								}								
+								if (daticertXml == null || postacertEmlSubject == null) {
+									logger.warn("pecParser2.dumpPart:");
+									logger.warn(pecParser2.getDumpLog().toString());
+								}								
 								EmailBody bodyPostacert = pecParser2.getPostacertEmlBody();
 								if (bodyPostacert != null) {
 									messaggioPec.setPostacertBody(bodyPostacert.getBody());
