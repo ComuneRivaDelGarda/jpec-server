@@ -1,0 +1,1 @@
+ALTER TABLE pec.messaggi ADD COLUMN url_documentale varchar;
