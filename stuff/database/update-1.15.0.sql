@@ -1,0 +1,1 @@
+ALTER TABLE pec.allegati RENAME COLUMN id_pec01 TO id_messaggio;
