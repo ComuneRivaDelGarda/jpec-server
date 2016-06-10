@@ -11,3 +11,5 @@ INSERT INTO pec.regole
 (azione, classe, criterio, dt_creazione, evento, nome, note, ordine)
 VALUES
 (NULL, 'it.attocchi.jpec.server.protocollo.impl.InviaSegnaturaConferma', '', null, 'AGGIORNA_SEGNATURA', 'Processa Segnatura', 'processa i messaggi ricevuti e crea le risposte segnature', NULL);
+
+select * from pec.regole;
