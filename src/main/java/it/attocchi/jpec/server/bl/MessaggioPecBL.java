@@ -1101,6 +1101,10 @@ public class MessaggioPecBL {
 					// successo
 					if (esitoRegole.stato == AzioneEsitoStato.OK || esitoRegole.stato == AzioneEsitoStato.REGOLA_NON_APPLICABILE) {
 						messaggioDaProcessare.setProcessato(true);
+						if (esitoRegole.errore != null) {
+							/* ci potrebbero essere delle note in questo campo, ad esempio OK ma non richiesta risposta automatica da segnatura */
+							messaggioDaProcessare.setErroreInvio(esitoRegole.errore);
+						}
 						messaggioDaProcessare.markAsUpdated(0);
 						JpaController.callUpdate(emf, messaggioDaProcessare);
 					} else {
@@ -1111,7 +1115,7 @@ public class MessaggioPecBL {
 						erroriAggiornaSegnatura.add(new PecException(message, esitoRegole.eccezione));
 					}
 				} else {
-					logger.warn("segnatura non presente per questo messaggio {}", messaggiDaProcessare);
+					logger.warn("segnatura non presente per questo messaggio {}", messaggioDaProcessare);
 				}
 			}
 			logger.info(i + " messaggi processati");
