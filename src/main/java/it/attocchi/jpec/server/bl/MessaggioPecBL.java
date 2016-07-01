@@ -58,6 +58,7 @@ public class MessaggioPecBL {
 	public static final String OGGETTO_POSTA_CERTIFICATA = "POSTA CERTIFICATA:";
 
 	public static final String BUSTA_TRASPORTO = "posta-certificata";
+	public static final String BUSTA_ANOMALIA = "errore";
 	public static final String RICEVUTA_ACCETTAZIONE = "accettazione";
 	public static final String RICEVUTA_CONSEGNA = "avvenuta-consegna";
 	public static final String RICEVUTA_ERRORE_CONSEGNA = "errore-consegna";
@@ -1083,6 +1084,8 @@ public class MessaggioPecBL {
 		List<RegolaPec> regoleAggiornaSegnatura = RegolaPecBL.regole(emf, RegolaPecEventoEnum.AGGIORNA_SEGNATURA);
 		if (regoleAggiornaSegnatura.isEmpty()) {
 			logger.warn("non ci sono regole per evento {}", RegolaPecEventoEnum.AGGIORNA_SEGNATURA.name());
+			logger.warn("processo di aggiornamento segnature sospeso");
+			return erroriAggiornaSegnatura;
 		} else {
 			logger.warn("{} regole caricate per evento {}", regoleAggiornaSegnatura.size(), RegolaPecEventoEnum.AGGIORNA_SEGNATURA.name());
 		}
