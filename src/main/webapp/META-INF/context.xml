@@ -8,7 +8,7 @@
     	type="javax.sql.DataSource"
     	factory="org.apache.commons.dbcp.BasicDataSourceFactory"
         driverClassName="org.postgresql.Driver"
-        url="jdbc:postgresql://172.20.2.227:5432/gda"
+        url="jdbc:postgresql://itas5p.intra.infotn.it:5432/gda"
         username="gda"
         password="gdapwd01a"        
         maxActive="20"
@@ -22,6 +22,7 @@
     />
     
 	<!-- configurazione postgresql -->
+	<!--
 	<Resource name="jdbc/JPecDB"
           auth="Container"
           type="javax.sql.DataSource"
@@ -47,7 +48,7 @@
           password="gdapwd01a"
           driverClassName="org.postgresql.Driver"
           url="jdbc:postgresql://172.20.2.227:5432/gda"/>
-          
+		-->
           <!-- url="jdbc:postgresql://192.168.64.20:5432/suite"/> -->
           <!-- url="jdbc:postgresql://192.168.64.66:5432/suite"/> -->
           
