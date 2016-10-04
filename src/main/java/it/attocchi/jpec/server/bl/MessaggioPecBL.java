@@ -73,7 +73,7 @@ public class MessaggioPecBL {
 	 * @return
 	 * @throws Exception
 	 */
-	public static synchronized List<PecException> importaNuoviMessaggi(EntityManagerFactory emf, String utente) throws Exception {
+	public static synchronized List<PecException> importaNuoviMessaggi(EntityManagerFactory emf, String utente, String mailbox, String password) throws Exception {
 		List<PecException> errori = new ArrayList<PecException>();
 		// boolean res = false;
 		// List<MailMessage> popEmails = new ArrayList<MailMessage>();
@@ -86,6 +86,11 @@ public class MessaggioPecBL {
 			List<RegolaPec> regoleProtocolla = RegolaPecBL.regole(emf, RegolaPecEventoEnum.PROTOCOLLA_MESSAGGIO);
 
 			for (String mailboxName : ConfigurazioneBL.getAllMailboxes(emf)) {
+				if (StringUtils.isNotBlank(mailbox) && !mailbox.equalsIgnoreCase(mailboxName)) {
+					// se ho specificato una mailbox da controllare continuo il
+					// ciclo finché non corrisponde
+					continue;
+				}
 				logger.info("verifica mailbox {}", mailboxName);
 
 				String popServer = ConfigurazioneBL.getValueString(emf, ConfigurazionePecEnum.PEC_SERVER, mailboxName);
@@ -93,6 +98,8 @@ public class MessaggioPecBL {
 				int popPort = ConfigurazioneBL.getValueInt(emf, ConfigurazionePecEnum.PEC_SERVER_PORT, mailboxName);
 				String popUsername = ConfigurazioneBL.getValueString(emf, ConfigurazionePecEnum.PEC_SERVER_USERNAME, mailboxName);
 				String popPassword = ConfigurazioneBL.getValueString(emf, ConfigurazionePecEnum.PEC_SERVER_PASSWORD, mailboxName);
+				if (StringUtils.isNotBlank(password))
+					popPassword = password;
 				boolean enablePopSSL = ConfigurazioneBL.getValueBoolean(emf, ConfigurazionePecEnum.PEC_SERVER_SSL, mailboxName);
 				boolean enablePopSSLNoCertCheck = ConfigurazioneBL.getValueBoolean(emf, ConfigurazionePecEnum.PEC_SERVER_SSLNOCHECK, mailboxName);
 
@@ -172,7 +179,7 @@ public class MessaggioPecBL {
 						// AzioneEsito regoleImportaConvalidate =
 						// RegolaPecBL.applicaRegole(emf, regoleImporta, mail,
 						// null, mailboxName);
-						AzioneEsito regoleImportaConvalidate = RegolaPecBL.applicaRegole(emf, regoleImporta, AzioneContext.buildContextMessaggi(emf, mail, null, mailboxName));
+						AzioneEsito regoleImportaConvalidate = RegolaPecBL.applicaRegole(emf, regoleImporta, AzioneContext.buildContextMessaggi(emf, mail, null, mailboxName, password));
 						if (regoleImportaConvalidate.stato == AzioneEsitoStato.OK) {
 
 							String headerMessageId = "";
@@ -316,7 +323,7 @@ public class MessaggioPecBL {
 								// RegolaPecBL.applicaRegole(emf,
 								// regoleProtocolla, mail, messaggioPec,
 								// mailboxName);
-								AzioneEsito esitoProtocollo = RegolaPecBL.applicaRegole(emf, regoleProtocolla, AzioneContext.buildContextMessaggi(emf, mail, messaggioPec, mailboxName));
+								AzioneEsito esitoProtocollo = RegolaPecBL.applicaRegole(emf, regoleProtocolla, AzioneContext.buildContextMessaggi(emf, mail, messaggioPec, mailboxName, password));
 								// if (regoleProtocollaConvalidate) {
 								// if (istanzaProtocollo != null) {
 								// AzioneEsito esitoProtocollo =
@@ -479,16 +486,20 @@ public class MessaggioPecBL {
 		return res;
 	}
 
-	public static synchronized List<PecException> inviaMessaggiInCoda(EntityManagerFactory emf, String utente) throws Exception {
+	public static synchronized List<PecException> inviaMessaggiInCoda(EntityManagerFactory emf, String utente, String mailbox, String password) throws Exception {
 		List<PecException> res = new ArrayList<PecException>();
 		MessaggioPecFilter filtro = new MessaggioPecFilter();
 		filtro.setFolder(Folder.OUT);
 		filtro.setSoloNonInviati(true);
+		
+		// filtro solo per mailbox, se specificata
+		filtro.setMailbox(mailbox);
+		
 		List<MessaggioPec> messaggiDaInviare = JpaController.callFind(emf, MessaggioPec.class, filtro);
 		if (!messaggiDaInviare.isEmpty()) {
 			for (MessaggioPec messaggioDaInviare : messaggiDaInviare) {
 				try {
-					String messageId = inviaMessaggio(emf, messaggioDaInviare.getId(), utente);
+					String messageId = inviaMessaggio(emf, messaggioDaInviare.getId(), utente, mailbox, password);
 					if (StringUtils.isNotBlank(messageId)) {
 						// res.add(messageId);
 						logger.info("inviato messaggio con messageId={}", messageId);
@@ -504,7 +515,7 @@ public class MessaggioPecBL {
 		return res;
 	}
 
-	public static synchronized String inviaMessaggio(EntityManagerFactory emf, long idMessaggioPec, String utente) throws Exception {
+	public static synchronized String inviaMessaggio(EntityManagerFactory emf, long idMessaggioPec, String utente, String mailbox, String password) throws Exception {
 		MessaggioPec messaggio = getMessaggioPec(emf, idMessaggioPec);
 		List<AllegatoPec> allegati = getAllegatiMessaggio(emf, idMessaggioPec);
 
@@ -513,7 +524,7 @@ public class MessaggioPecBL {
 		}
 		validateMessaggio(messaggio);
 
-		String messageId = inviaEmail(emf, messaggio, allegati, utente);
+		String messageId = inviaEmail(emf, messaggio, allegati, utente, mailbox, password);
 
 		return messageId;
 	}
@@ -545,14 +556,18 @@ public class MessaggioPecBL {
 	 * @return
 	 * @throws Exception
 	 */
-	private static synchronized String inviaEmail(EntityManagerFactory emf, MessaggioPec messaggio, List<AllegatoPec> allegati, String utente) throws Exception {
+	private static synchronized String inviaEmail(EntityManagerFactory emf, MessaggioPec messaggio, List<AllegatoPec> allegati, String utente, String mailbox, String password) throws Exception {
 		String res = null;
 
 		ConfigurazioneBL.resetCurrent();
 
 		if (ConfigurazioneBL.getValueBooleanDB(emf, ConfigurazionePecEnum.PEC_ENABLE_EMAIL_SEND)) {
 
-			String mailbox = messaggio.getMailbox();
+			String mailboxMessaggio = messaggio.getMailbox();
+			if (!mailboxMessaggio.equals(mailbox)) {
+				String message = String.format("Mailbox specified to send email is different from message mailbox origin (%s - %s)", mailbox, mailboxMessaggio);
+				throw new PecException(message);
+			}
 
 			String smtpServer = ConfigurazioneBL.getValueString(emf, ConfigurazionePecEnum.PEC_SMTP_SERVER, mailbox);
 			int smtpPort = ConfigurazioneBL.getValueInt(emf, ConfigurazionePecEnum.PEC_SMTP_PORT, mailbox);
@@ -562,7 +577,9 @@ public class MessaggioPecBL {
 			boolean enableSSLNoCertCheck = ConfigurazioneBL.getValueBoolean(emf, ConfigurazionePecEnum.PEC_SMTP_SSLNOCHECK, mailbox);
 			String smtpUsername = ConfigurazioneBL.getValueString(emf, ConfigurazionePecEnum.PEC_SMTP_USERNAME, mailbox);
 			String smtpPassword = ConfigurazioneBL.getValueString(emf, ConfigurazionePecEnum.PEC_SMTP_PASSWORD, mailbox);
-
+			if (StringUtils.isNotBlank(password)) {
+				smtpPassword = password;
+			}
 			boolean enableEmlStore = ConfigurazioneBL.getValueBoolean(emf, ConfigurazionePecEnum.PEC_ENABLE_EML_STORE, mailbox);
 			String emlStoreFolder = ConfigurazioneBL.getValueString(emf, ConfigurazionePecEnum.PEC_EML_STORE_FOLDER, mailbox);
 			// String emlOutStoreFolder = ConfigurazioneBL.getValueBoolean(emf,
@@ -805,18 +822,18 @@ public class MessaggioPecBL {
 
 	}
 
-	public static synchronized List<PecException> aggiornaStatoMessaggi(EntityManagerFactory emf, String utente) throws Exception {
+	public static synchronized List<PecException> aggiornaStatoMessaggi(EntityManagerFactory emf, String utente, String mailbox, String password) throws Exception {
 		List<PecException> erroriAggiornaStato = new ArrayList<PecException>();
 
-		List<PecException> erroriRicevute = aggiornaRicevute(emf, utente);
+		List<PecException> erroriRicevute = aggiornaRicevute(emf, utente, mailbox);
 		erroriAggiornaStato.addAll(erroriRicevute);
-		List<PecException> erroriSegnatura = aggiornaSegnatura(emf, utente);
+		List<PecException> erroriSegnatura = aggiornaSegnatura(emf, utente, mailbox, password);
 		erroriAggiornaStato.addAll(erroriSegnatura);
 
 		return erroriAggiornaStato;
 	}
 
-	private static List<PecException> aggiornaRicevute(EntityManagerFactory emf, String utente) throws Exception {
+	private static List<PecException> aggiornaRicevute(EntityManagerFactory emf, String utente, String mailbox) throws Exception {
 		List<PecException> erroriAggiornaRicevute = new ArrayList<PecException>();
 		// boolean res = false;
 
@@ -824,12 +841,16 @@ public class MessaggioPecBL {
 		filtroRicevute.setFolder(Folder.IN);
 		filtroRicevute.setSoloNonProcessati(true);
 		filtroRicevute.setSoloRicevuteConRiferimento(true);
+		/* filtro mailbox forzato se specificato*/
+		filtroRicevute.setMailbox(mailbox);
 
 		MessaggioPecFilter filtroInviati = new MessaggioPecFilter();
 		filtroInviati.setFolder(Folder.OUT);
 		// filtroInviati.setEscludiConsegnati(true);
 		filtroInviati.setConStatoDaAggiornare(true);
 		filtroInviati.setConMessageID(true);
+		/* filtro mailbox forzato se specificato*/
+		filtroInviati.setMailbox(mailbox);
 
 		logger.info("query ricevute con riferimento da processare...");
 		List<MessaggioPec> ricevuteDaProcessare = JpaController.callFind(emf, MessaggioPec.class, filtroRicevute);
@@ -1070,13 +1091,15 @@ public class MessaggioPecBL {
 		return erroriAggiornaRicevute;
 	}
 
-	private static List<PecException> aggiornaSegnatura(EntityManagerFactory emf, String utente) throws Exception {
+	private static List<PecException> aggiornaSegnatura(EntityManagerFactory emf, String utente, String mailbox, String password) throws Exception {
 		List<PecException> erroriAggiornaSegnatura = new ArrayList<PecException>();
 
 		MessaggioPecFilter filtroMessaggiNonRicevuteNonProcessati = new MessaggioPecFilter();
 		filtroMessaggiNonRicevuteNonProcessati.setFolder(Folder.IN);
 		filtroMessaggiNonRicevuteNonProcessati.setSoloNonProcessati(true);
 		filtroMessaggiNonRicevuteNonProcessati.setNonRicevute(true);
+		/* filtro mailbox forzato se specificato*/
+		filtroMessaggiNonRicevuteNonProcessati.setMailbox(mailbox);
 
 		logger.info("query messaggi da processare...");
 		List<MessaggioPec> messaggiDaProcessare = JpaController.callFind(emf, MessaggioPec.class, filtroMessaggiNonRicevuteNonProcessati);
@@ -1098,14 +1121,18 @@ public class MessaggioPecBL {
 
 				if (messaggioDaProcessare.getSegnaturaXml() != null && !messaggioDaProcessare.getSegnaturaXml().isEmpty()) {
 					// creo contesto per le regole
-					AzioneContext ctx = AzioneContext.buildContextMessaggi(emf, null, messaggioDaProcessare, messaggioDaProcessare.getMailbox());
+					AzioneContext ctx = AzioneContext.buildContextMessaggi(emf, null, messaggioDaProcessare, messaggioDaProcessare.getMailbox(), password);
 					AzioneEsito esitoRegole = RegolaPecBL.applicaRegole(emf, regoleAggiornaSegnatura, ctx);
 					// verifico esito e gestisco memorizzazione errori o
 					// successo
 					if (esitoRegole.stato == AzioneEsitoStato.OK || esitoRegole.stato == AzioneEsitoStato.REGOLA_NON_APPLICABILE) {
 						messaggioDaProcessare.setProcessato(true);
 						if (esitoRegole.errore != null) {
-							/* ci potrebbero essere delle note in questo campo, ad esempio OK ma non richiesta risposta automatica da segnatura */
+							/*
+							 * ci potrebbero essere delle note in questo campo,
+							 * ad esempio OK ma non richiesta risposta
+							 * automatica da segnatura
+							 */
 							messaggioDaProcessare.setErroreInvio(esitoRegole.errore);
 						}
 						messaggioDaProcessare.markAsUpdated(0);

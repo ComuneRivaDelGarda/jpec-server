@@ -63,6 +63,9 @@ public class NotificaPec extends AbstractEntityMarksWithIdLong<NotificaPec> impl
 	@Column(name = "errore")
 	private String errore;
 
+	@Column(name = "pec05_mailbox")
+	private String mailbox;
+	
 	public long getId() {
 		return id;
 	}
@@ -149,6 +152,14 @@ public class NotificaPec extends AbstractEntityMarksWithIdLong<NotificaPec> impl
 
 	public void setIdMessaggioPadre(long idMessaggioPadre) {
 		this.idMessaggioPadre = idMessaggioPadre;
+	}
+
+	public String getMailbox() {
+		return mailbox;
+	}
+
+	public void setMailbox(String mailbox) {
+		this.mailbox = mailbox;
 	}
 
 	@Embedded
