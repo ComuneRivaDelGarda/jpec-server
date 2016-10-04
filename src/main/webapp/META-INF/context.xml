@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context antiJARLocking="true">
 
+	<!-- configurazione postgresql x tomcat 6-->
+    <Resource
+    	name="jdbc/JPecDB"
+    	auth="Container"
+    	type="javax.sql.DataSource"
+    	factory="org.apache.commons.dbcp.BasicDataSourceFactory"
+        driverClassName="org.postgresql.Driver"
+        url="jdbc:postgresql://172.20.2.227:5432/gda"
+        username="gda"
+        password="gdapwd01a"        
+        maxActive="20"
+        maxIdle="10"
+        maxWait="5000"
+        validationQuery="SELECT 1"
+        testOnBorrow="true"
+        testWhileIdle="true"
+        timeBetweenEvictionRunsMillis="10000"
+        minEvictableIdleTimeMillis="60000"
+    />
+    
 	<!-- configurazione postgresql -->
 	<Resource name="jdbc/JPecDB"
           auth="Container"
@@ -23,10 +43,10 @@
           jmxEnabled="true"
           jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;
             org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"
-          username="suitepa"
-          password="protoriva2014"
+          username="gda"
+          password="gdapwd01a"
           driverClassName="org.postgresql.Driver"
-          url="jdbc:postgresql://192.168.64.66:5432/suite"/>
+          url="jdbc:postgresql://172.20.2.227:5432/gda"/>
           
           <!-- url="jdbc:postgresql://192.168.64.20:5432/suite"/> -->
           <!-- url="jdbc:postgresql://192.168.64.66:5432/suite"/> -->
