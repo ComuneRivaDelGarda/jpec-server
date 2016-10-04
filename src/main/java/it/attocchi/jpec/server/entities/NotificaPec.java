@@ -63,7 +63,7 @@ public class NotificaPec extends AbstractEntityMarksWithIdLong<NotificaPec> impl
 	@Column(name = "errore")
 	private String errore;
 
-	@Column(name = "pec05_mailbox")
+	@Column(name = "mailbox")
 	private String mailbox;
 	
 	public long getId() {
