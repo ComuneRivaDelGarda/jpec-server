@@ -57,16 +57,6 @@ http://www.agid.gov.it/sites/default/files/leggi_decreti_direttive/pec_regole_te
 ## Configurazione Base del Programma
 fare riferimento alla wiki online https://github.com/mattocchi/jpec-server/wiki/Configurazioni-Necessarie
 
-
-### Generale
-
-### Ricezione
-
-### Invio
-
-### Notifiche
-
-
 ### Configurazione Generale
 * PEC_MAILBOXES_FOLDER: [String] specifica la posizione dei files di configurazione delle mailbox (valore di default ./WEB-INF/)
 * PEC_ATTACH_STORE_FOLDER: [String] specifica la cartella dove salvare gli allegati ai messaggi pec inviati (valore di default ./WEB-INF/allegati). ATTENZIONE: non vengono cancellati automaticamente
@@ -99,11 +89,20 @@ Eventi a cui e' possibile agganciare comportamento personalizzato:
 | --- | --- |
 |IMPORTA_MESSAGGIO|handle per la defizione di criteri per importazione dei messaggi|
 |PROTOCOLLA_MESSAGGIO|handle per la  definizione di un comportamento per la protocollazione dei messaggi|
+|AGGIORNA_STATO|handle per la definizione di regole per l'aggiornamento di (esempio: allega le ricevute nel documentale)|
 |AGGIORNA_SEGNATURA|handle per la definizione di un comportamento quando in presenza di una segnatura, esempio risposta automatica|
 
-### Estensione con Plugin Personalizzati
+| Evento | Descrizione |
+| --- | --- |
+|evento|hande a cui agganciare questa regola|
+|nome|nome della regola|
+|ordine|se sono configurate piu regole sullo stesso handle utile per determinare ordine di esecuzione|
+|criterio|script groovy che viene valutato per verificare se la regola è applicabile, se ritorna true viene "eseguita"|
+|azione|script groovy con il quale è possibile interagire con la regola, settando variabili ad esempio nell'istanza di classe|
+|classe|specifica quale classe istanziare per l'applicazione di questa regola|
+|note|note relative alla regola|
 
-it.attocchi.jpec.server.protocollo.AbstractAzione
+
 
 ### Scripting via Groovy
 
@@ -114,6 +113,6 @@ it.attocchi.jpec.server.protocollo.AbstractAzione
 
 l'istanza "helper" di RegolaPecHelper contiene al suo interno due field con riferimento all'istanza di RegolaPec in .regola (la regola che ha creato l'istanza di questo Helper) e di Message in .messaggioEmail (il messaggio email che sta per essere valuato)
 
+### Estensione con Plugin Personalizzati
 
-
-
+it.attocchi.jpec.server.protocollo.AbstractAzione
