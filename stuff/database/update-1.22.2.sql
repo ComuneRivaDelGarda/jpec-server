@@ -1,0 +1,3 @@
+-- inserire nelle regole 
+-- azione.setUfficioId(25l); 
+-- x RIVA
