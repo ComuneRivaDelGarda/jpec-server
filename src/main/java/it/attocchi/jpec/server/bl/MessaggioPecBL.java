@@ -24,6 +24,7 @@ import it.attocchi.utils.ListUtils;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
@@ -804,6 +805,11 @@ public class MessaggioPecBL {
 		allegato.setStoreFileName(FilenameUtils.getName(f.getName()));
 		allegato.setStorePath(f.getPath());
 
+		// TODO: in caso di FILE che arrivano da DOCER non abbiamo il setContetType
+		if (allegatoRequest.getContentType() == null || allegatoRequest.getContentType().isEmpty()) {
+			allegato.setContetType(Files.probeContentType(f.toPath()));
+		}
+		
 		allegato.setIdMessaggio(allegatoRequest.getIdMessaggio());
 		allegato.markAsCreated(0);
 		JpaController.callInsert(emf, allegato);
