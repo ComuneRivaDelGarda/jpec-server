@@ -53,7 +53,7 @@
           jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;
             org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"
           username="postgres"
-          password=""
+          password="postgres"
           driverClassName="org.postgresql.Driver"
           url="jdbc:postgresql:///suite"/> -->
 
