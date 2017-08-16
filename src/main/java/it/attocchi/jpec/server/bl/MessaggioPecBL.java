@@ -173,7 +173,7 @@ public class MessaggioPecBL {
 						/* creo una copia off-line della email, che altrimenti è legata alla sessione, una volta chiusa la sessione potrebbe non essere possibile accedere alcune info */
 						// https://community.oracle.com/thread/1591794
 						logger.warn("coping Session Message {} to offline MimeMessage...", mailmessage.getClass().getName());
-						MimeMessage tmp = (MimeMessage)mailmessage;
+						MimeMessage tmp = (MimeMessage) mailmessage;
 						MimeMessage mail = new MimeMessage(tmp);
 						
 						// MailMessage m = MailMessage.create(mail);
@@ -264,6 +264,9 @@ public class MessaggioPecBL {
 								messaggioPec.setDataInvioOriginale(mail.getSentDate());
 								messaggioPec.setDataRicezione(mail.getReceivedDate());
 
+								/**
+								 * Necessario JavaMail 1.5 per gestire quoted-printable
+								 */
 								EmailBody body = MailUtils.getBody(mail);
 								messaggioPec.setMessaggio(body.getBody());
 
